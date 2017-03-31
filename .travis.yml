@@ -1,0 +1,15 @@
+language: go
+
+go:
+  - 1.7
+  - 1.8
+  - tip
+
+install:
+  - go get github.com/nsf/gocode
+  - go get ./...
+  - go get -t ./...
+
+matrix:
+  allow_failures:
+    - go: 'tip'
