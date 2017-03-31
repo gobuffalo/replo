@@ -16,7 +16,7 @@ var session = repl.NewSession(`fmt`)
 
 var RootCmd = &cobra.Command{
 	Use:   "replo",
-	Short: "A brief description of your application",
+	Short: "A Go REPL (oh and you can embed it in your app!)",
 	RunE: func(cmd *cobra.Command, args []string) error {
 		return session.Start()
 	},

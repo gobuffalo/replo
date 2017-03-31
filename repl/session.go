@@ -43,11 +43,6 @@ func (s *Session) Clear() {
 	s.Lines = []string{}
 }
 
-func (s *Session) Reset() {
-	s.Clear()
-	s.Imports = s.originalImports
-}
-
 func (s *Session) Execute(data string, out io.Writer) ([]byte, error) {
 	s.Clear()
 	for _, line := range strings.Split(data, "\n") {
@@ -73,7 +68,7 @@ func (s *Session) Execute(data string, out io.Writer) ([]byte, error) {
 	}
 	defer f.Close()
 
-	err = s.Print(f)
+	err = s.generate(f)
 	if err != nil {
 		return nil, errors.WithStack(err)
 	}
@@ -95,7 +90,7 @@ func (s *Session) goImports(path string, out io.Writer) {
 	}
 }
 
-func (s *Session) Print(out io.Writer) error {
+func (s *Session) generate(out io.Writer) error {
 	t, err := template.New("replo").Parse(tmpl)
 	if err != nil {
 		return errors.WithStack(err)
